@@ -18,7 +18,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalURL} />
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
@@ -26,72 +25,128 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:image" content={ogImage} />
     <meta property="og:locale" content="he_IL" />
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
 
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Schema.org LocalBusiness -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "HealthAndBeautyBusiness",
       "name": "אסתר שירית — טיפול הוליסטי",
       "telephone": "+972-55-240-0842",
-      "url": "https://esther-shirit.co.il",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "תל אביב",
-        "addressCountry": "IL"
-      },
+      "url": "https://esther-shirit.vercel.app",
+      "address": { "@type": "PostalAddress", "addressLocality": "תל אביב", "addressCountry": "IL" },
       "description": "מטפלת הוליסטית בתל אביב — לייף קואצ׳ינג, עיסוי, ארומתרפיה ופרחי באך",
       "priceRange": "₪₪",
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Sunday","Monday","Tuesday","Wednesday","Thursday"],
-        "opens": "09:00",
-        "closes": "20:00"
-      }
+      "openingHoursSpecification": { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday","Monday","Tuesday","Wednesday","Thursday"], "opens": "09:00", "closes": "20:00" }
     })} />
 
     <title>{title}</title>
 
     <style is:global>
       html { scroll-behavior: smooth; }
-      body { font-family: 'Heebo', sans-serif; }
+      body { font-family: 'Heebo', sans-serif; overflow-x: hidden; }
+      
+      .font-serif { font-family: 'Playfair Display', serif; }
 
       .fade-in {
         opacity: 0;
-        transform: translateY(24px);
-        transition: opacity 0.7s ease, transform 0.7s ease;
+        transform: translateY(30px);
+        transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       }
-      .fade-in.visible {
-        opacity: 1;
-        transform: translateY(0);
+      .fade-in.visible { opacity: 1; transform: translateY(0); }
+      .fade-in-left { opacity: 0; transform: translateX(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+      .fade-in-left.visible { opacity: 1; transform: translateX(0); }
+      .fade-in-right { opacity: 0; transform: translateX(-40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+      .fade-in-right.visible { opacity: 1; transform: translateX(0); }
+
+      /* Parallax-like decorative elements */
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.12;
+        pointer-events: none;
+      }
+
+      /* Glassmorphism card */
+      .glass {
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,0.3);
+      }
+
+      /* Gradient text */
+      .text-gradient {
+        background: linear-gradient(135deg, #812268 0%, #B8860B 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Soft line divider */
+      .divider {
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #812268, #B8860B);
+        border-radius: 2px;
+        margin: 0 auto;
+      }
+
+      /* Hover lift */
+      .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px rgba(129,34,104,0.12);
+      }
+
+      /* Subtle pattern overlay */
+      .pattern-overlay {
+        background-image: radial-gradient(circle at 1px 1px, rgba(129,34,104,0.03) 1px, transparent 0);
+        background-size: 24px 24px;
+      }
+
+      /* Animated gradient border */
+      @keyframes borderGlow {
+        0%, 100% { border-color: rgba(129,34,104,0.2); }
+        50% { border-color: rgba(184,134,11,0.4); }
+      }
+      .glow-border { animation: borderGlow 4s ease-in-out infinite; }
+
+      /* Smooth scroll indicator */
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(8px); }
       }
     </style>
   </head>
-  <body class="bg-cream text-gray-800 font-heebo">
-    <nav class="bg-white/90 backdrop-blur-sm shadow-sm sticky top-0 z-40">
-      <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <a href="/" class="text-2xl font-bold text-primary">✦ אסתר שירית</a>
-        <button id="menu-toggle" class="md:hidden text-primary text-3xl leading-none" aria-label="תפריט">☰</button>
-        <ul id="nav-links" class="hidden md:flex gap-6 text-sm font-medium">
-          <li><a href="/" class="hover:text-primary transition">דף הבית</a></li>
-          <li><a href="/services" class="hover:text-primary transition">שירותים</a></li>
-          <li><a href="/about" class="hover:text-primary transition">אודות</a></li>
-          <li><a href="/contact" class="hover:text-primary transition">צור קשר</a></li>
-          <li><a href="/booking" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-primary-dark transition text-xs">📅 הזמנת תור</a></li>
+  <body class="bg-cream text-gray-800">
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="/" class="text-2xl font-bold text-white drop-shadow-sm hover:opacity-80 transition">
+          <span class="font-serif">✦</span> אסתר שירית
+        </a>
+        <button id="menu-toggle" class="md:hidden text-white text-3xl leading-none" aria-label="תפריט">☰</button>
+        <ul id="nav-links" class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <li><a href="/" class="text-white/90 hover:text-white transition">דף הבית</a></li>
+          <li><a href="/services" class="text-white/90 hover:text-white transition">שירותים</a></li>
+          <li><a href="/about" class="text-white/90 hover:text-white transition">אודות</a></li>
+          <li><a href="/contact" class="text-white/90 hover:text-white transition">צור קשר</a></li>
+          <li><a href="/booking" class="bg-white/20 backdrop-blur-sm text-white px-5 py-2 rounded-full hover:bg-white/30 transition text-xs font-bold border border-white/20">📅 הזמנת תור</a></li>
         </ul>
       </div>
-      <ul id="mobile-menu" class="hidden flex-col gap-4 px-6 pb-4 md:hidden text-sm font-medium">
-        <li><a href="/" class="block hover:text-primary">דף הבית</a></li>
-        <li><a href="/services" class="block hover:text-primary">שירותים</a></li>
-        <li><a href="/about" class="block hover:text-primary">אודות</a></li>
-        <li><a href="/contact" class="block hover:text-primary">צור קשר</a></li>
-        <li><a href="/booking" class="block text-primary font-bold">📅 הזמנת תור</a></li>
+      <ul id="mobile-menu" class="hidden flex-col gap-4 px-6 pb-4 md:hidden text-sm font-medium bg-primary-dark/95 backdrop-blur-sm">
+        <li><a href="/" class="block text-white/90 hover:text-white py-2">דף הבית</a></li>
+        <li><a href="/services" class="block text-white/90 hover:text-white py-2">שירותים</a></li>
+        <li><a href="/about" class="block text-white/90 hover:text-white py-2">אודות</a></li>
+        <li><a href="/contact" class="block text-white/90 hover:text-white py-2">צור קשר</a></li>
+        <li><a href="/booking" class="block text-secondary font-bold py-2">📅 הזמנת תור</a></li>
       </ul>
     </nav>
 
@@ -99,17 +154,43 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       <slot />
     </main>
 
-    <footer class="bg-primary-dark text-white/80 py-10 mt-16">
-      <div class="max-w-6xl mx-auto px-4 text-center space-y-3">
-        <p class="text-lg font-bold text-white">✦ אסתר שירית — טיפול הוליסטי</p>
-        <p>תל אביב · 055-240-0842</p>
-        <p class="text-sm text-white/50">© {new Date().getFullYear()} כל הזכויות שמורות</p>
+    <!-- Footer -->
+    <footer class="relative bg-primary-dark text-white/80 pt-16 pb-8 mt-16 overflow-hidden">
+      <div class="blob w-64 h-64 bg-secondary top-0 left-1/4"></div>
+      <div class="max-w-6xl mx-auto px-4 relative z-10">
+        <div class="grid md:grid-cols-3 gap-10 mb-10">
+          <div>
+            <p class="text-xl font-bold text-white mb-3"><span class="font-serif">✦</span> אסתר שירית</p>
+            <p class="text-sm leading-relaxed">מטפלת הוליסטית בתל אביב.<br/>מלווה נשים בדרך לריפוי, איזון ושקט פנימי.</p>
+          </div>
+          <div>
+            <p class="font-bold text-white mb-3">ניווט מהיר</p>
+            <ul class="space-y-2 text-sm">
+              <li><a href="/" class="hover:text-secondary transition">דף הבית</a></li>
+              <li><a href="/services" class="hover:text-secondary transition">שירותים</a></li>
+              <li><a href="/booking" class="hover:text-secondary transition">הזמנת תור</a></li>
+              <li><a href="/contact" class="hover:text-secondary transition">צור קשר</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="font-bold text-white mb-3">צרי קשר</p>
+            <ul class="space-y-2 text-sm">
+              <li>📍 תל אביב</li>
+              <li>📞 <a href="tel:0552400842" class="hover:text-secondary transition">055-240-0842</a></li>
+              <li>💬 <a href="https://wa.me/972552400842" class="hover:text-secondary transition">וואטסאפ</a></li>
+              <li>🕐 א׳-ה׳ 09:00-20:00</li>
+            </ul>
+          </div>
+        </div>
+        <div class="border-t border-white/10 pt-6 text-center text-sm text-white/40">
+          © {new Date().getFullYear()} אסתר שירית — כל הזכויות שמורות
+        </div>
       </div>
     </footer>
 
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/972552400842" target="_blank" rel="noopener"
-       class="fixed bottom-6 left-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg transition-transform hover:scale-110"
+       class="fixed bottom-6 left-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:shadow-green-500/30 hover:shadow-xl"
        aria-label="שלחי הודעה בוואטסאפ">
       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -119,15 +200,31 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <script>
       // Mobile menu toggle
       document.getElementById('menu-toggle')?.addEventListener('click', () => {
-        document.getElementById('mobile-menu')?.classList.toggle('hidden');
-        document.getElementById('mobile-menu')?.classList.toggle('flex');
+        const menu = document.getElementById('mobile-menu');
+        menu?.classList.toggle('hidden');
+        menu?.classList.toggle('flex');
       });
 
-      // Fade-in on scroll
+      // Navbar scroll effect
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 80) {
+          navbar?.classList.add('bg-primary-dark/95', 'backdrop-blur-md', 'shadow-lg');
+          navbar?.classList.remove('bg-transparent');
+        } else {
+          navbar?.classList.remove('bg-primary-dark/95', 'backdrop-blur-md', 'shadow-lg');
+        }
+      });
+
+      // Intersection Observer for animations
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        entries.forEach((e, i) => { 
+          if (e.isIntersecting) { 
+            setTimeout(() => e.target.classList.add('visible'), i * 100);
+          } 
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+      document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => observer.observe(el));
     </script>
   </body>
 </html>
