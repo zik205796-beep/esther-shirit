@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const services = [
+  {
+    icon: '🧭',
+    name: 'לייף קואצ׳ינג',
+    desc: 'תהליך ליווי אישי שמטרתו להוביל אותך לבהירות, מיקוד והגשמה עצמית. בפגישות קואצ׳ינג נעבוד יחד על זיהוי דפוסים, הגדרת מטרות וצעדים קונקרטיים לשינוי. התהליך מותאם אישית, בקצב שלך, עם כלים מעשיים שמלווים אותך גם בין הפגישות.',
+    includes: ['זיהוי חסמים ודפוסים חוזרים', 'הגדרת חזון ומטרות', 'כלים מעשיים ליישום יומיומי', 'ליווי בין פגישות בוואטסאפ'],
+  },
+  {
+    icon: '💆‍♀️',
+    name: 'עיסוי',
+    desc: 'עיסוי מקצועי שמשלב טכניקות שונות — שוודי, רקמות עמוקות ונקודות לחיצה — למטרת שחרור מתחים, הפגת כאבים ויצירת זרימה חדשה בגוף. כל עיסוי מותאם לצרכים שלך, עם שמנים טבעיים ואווירה מרגיעה.',
+    includes: ['עיסוי שוודי קלאסי', 'עיסוי רקמות עמוקות', 'שילוב שמנים אתריים', 'אווירה מרגיעה ומפנקת'],
+  },
+  {
+    icon: '🌸',
+    name: 'ארומתרפיה',
+    desc: 'טיפול בשמנים אתריים טהורים ואיכותיים. הריחות פועלים ישירות על מערכת העצבים ועוזרים לאזן, להרגיע ולרפא — גם ברמה הפיזית וגם ברמה הרגשית. מתאים במיוחד לתקופות של מתח, חוסר שינה ותחושת חוסר איזון.',
+    includes: ['ייעוץ אישי לבחירת שמנים', 'עיסוי ארומתרפי', 'הכנת תמהילים אישיים', 'הנחיה לשימוש ביתי'],
+  },
+  {
+    icon: '🌼',
+    name: 'פרחי באך',
+    desc: 'שיטת ריפוי טבעית שפותחה ע"י ד"ר אדוארד באך, המבוססת על 38 תמציות פרחים. כל תמצית מטפלת במצב רגשי ספציפי — פחד, חרדה, חוסר ביטחון, עצב ועוד. אני מרכיבה נוסחה אישית בהתאם למה שאת חווה.',
+    includes: ['אבחון רגשי מעמיק', 'הרכבת בקבוק אישי', 'מעקב והתאמה לאורך זמן', 'שילוב עם טיפולים נוספים'],
+  },
+];
+---
+
+<Layout title="שירותים — אסתר שירית" description="לייף קואצ׳ינג, עיסוי, ארומתרפיה ופרחי באך — שירותי טיפול הוליסטי בתל אביב">
+
+  <section class="bg-gradient-to-b from-primary to-primary-dark text-white text-center py-20 px-4">
+    <h1 class="text-4xl md:text-5xl font-black mb-4 fade-in">השירותים שלי</h1>
+    <p class="text-lg text-white/80 fade-in">כל טיפול הוא מסע — מותאם אישית, בדיוק בשבילך</p>
+  </section>
+
+  <section class="max-w-4xl mx-auto px-4 py-16 space-y-16">
+    {services.map(s => (
+      <div class="bg-white rounded-2xl p-8 md:p-10 shadow-lg fade-in">
+        <div class="flex items-center gap-4 mb-6">
+          <span class="text-5xl">{s.icon}</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-primary">{s.name}</h2>
+        </div>
+        <p class="text-gray-700 leading-relaxed mb-6">{s.desc}</p>
+        <h3 class="font-bold text-primary mb-3">מה כולל הטיפול:</h3>
+        <ul class="space-y-2 mb-6">
+          {s.includes.map(i => (
+            <li class="flex items-center gap-2 text-gray-600">
+              <span class="text-secondary">✦</span> {i}
+            </li>
+          ))}
+        </ul>
+        <div class="flex items-center justify-between border-t pt-6">
+          <p class="text-gray-500 text-sm">💰 צרי קשר למחירים</p>
+          <a href="https://wa.me/972552400842" target="_blank" rel="noopener"
+             class="bg-primary hover:bg-primary-light text-white font-bold px-6 py-2 rounded-full text-sm transition">
+            לתיאום →
+          </a>
+        </div>
+      </div>
+    ))}
+  </section>
+
+</Layout>

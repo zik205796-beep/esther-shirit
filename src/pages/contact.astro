@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="צור קשר — אסתר שירית" description="צרי קשר עם אסתר שירית לתיאום פגישת טיפול הוליסטי בתל אביב">
+
+  <section class="bg-gradient-to-b from-primary to-primary-dark text-white text-center py-20 px-4">
+    <h1 class="text-4xl md:text-5xl font-black mb-4 fade-in">צרי קשר</h1>
+    <p class="text-lg text-white/80 fade-in">אשמח לשמוע ממך ולענות על כל שאלה</p>
+  </section>
+
+  <section class="max-w-5xl mx-auto px-4 py-16">
+    <div class="grid md:grid-cols-2 gap-12">
+      
+      <!-- Contact Form -->
+      <div class="bg-white rounded-2xl p-8 shadow-lg fade-in">
+        <h2 class="text-2xl font-bold text-primary mb-6">השאירי פרטים</h2>
+        <form action="https://formsubmit.co/your-email@example.com" method="POST" class="space-y-5">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">שם מלא</label>
+            <input type="text" name="name" required
+                   class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">טלפון</label>
+            <input type="tel" name="phone" required dir="ltr"
+                   class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">הודעה</label>
+            <textarea name="message" rows="4"
+                      class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition resize-none"></textarea>
+          </div>
+          <button type="submit"
+                  class="w-full bg-primary hover:bg-primary-light text-white font-bold py-3 rounded-xl transition-all hover:scale-[1.02]">
+            שלחי הודעה ✉️
+          </button>
+        </form>
+      </div>
+
+      <!-- Info + Map -->
+      <div class="space-y-8 fade-in">
+        <div class="bg-white rounded-2xl p-8 shadow-lg">
+          <h2 class="text-2xl font-bold text-primary mb-6">פרטי התקשרות</h2>
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">📞</span>
+              <div>
+                <p class="text-sm text-gray-500">טלפון</p>
+                <a href="tel:0552400842" class="font-bold text-gray-800 hover:text-primary" dir="ltr">055-240-0842</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">💬</span>
+              <div>
+                <p class="text-sm text-gray-500">וואטסאפ</p>
+                <a href="https://wa.me/972552400842" target="_blank" rel="noopener" class="font-bold text-green-600 hover:text-green-700">שלחי הודעה בוואטסאפ</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">📍</span>
+              <div>
+                <p class="text-sm text-gray-500">מיקום</p>
+                <p class="font-bold text-gray-800">תל אביב</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🕐</span>
+              <div>
+                <p class="text-sm text-gray-500">שעות פעילות</p>
+                <p class="font-bold text-gray-800">ראשון–חמישי, 09:00–20:00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="rounded-2xl overflow-hidden shadow-lg">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d54081.46398718498!2d34.74561!3d32.0853!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d4ca6193b7c1f%3A0xc1fb72a2c0963f90!2sTel%20Aviv-Yafo!5e0!3m2!1siw!2sil!4v1"
+            width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade" title="מפת תל אביב">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>

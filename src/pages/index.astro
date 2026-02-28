@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="אסתר שירית — מטפלת הוליסטית בתל אביב">
+
+  <!-- Hero -->
+  <section class="relative bg-gradient-to-bl from-primary via-primary-dark to-primary min-h-[85vh] flex items-center justify-center text-center text-white px-4">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.08),transparent_60%)]"></div>
+    <div class="relative z-10 max-w-3xl fade-in">
+      <p class="text-secondary-light text-lg mb-4 tracking-wide">✦ טיפול הוליסטי בתל אביב</p>
+      <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">אסתר שירית</h1>
+      <p class="text-xl md:text-2xl font-light leading-relaxed mb-8 text-white/90">
+        מלווה נשים בדרך לריפוי, איזון ושקט פנימי —<br class="hidden md:block" />
+        דרך הגוף, הנפש והריח
+      </p>
+      <a href="/booking"
+         class="inline-block bg-secondary hover:bg-secondary-light text-white font-bold px-10 py-4 rounded-full text-lg transition-all hover:scale-105 shadow-xl">
+        📅 הזמנת תור
+      </a>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="max-w-6xl mx-auto px-4 py-20">
+    <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-4 fade-in">השירותים שלי</h2>
+    <p class="text-center text-gray-500 mb-12 fade-in">כל טיפול מותאם אישית, בדיוק בשבילך</p>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {[
+        { icon: '🧭', name: 'לייף קואצ׳ינג', desc: 'ליווי אישי לבהירות, מיקוד והגשמה עצמית. יחד נמצא את הדרך שלך — בקצב שלך.' },
+        { icon: '💆‍♀️', name: 'עיסוי', desc: 'עיסוי מרגיע ומשחרר שמשלב טכניקות שונות לשחרור מתחים ויצירת זרימת אנרגיה.' },
+        { icon: '🌸', name: 'ארומתרפיה', desc: 'טיפול בשמנים אתריים טהורים שמרגיעים את הנפש ומאזנים את הגוף מבפנים.' },
+        { icon: '🌼', name: 'פרחי באך', desc: 'תמציות פרחים טבעיות לאיזון רגשי. מתאים למתח, חרדה, שינויי מצב רוח ועוד.' },
+      ].map(s => (
+        <div class="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-shadow text-center fade-in">
+          <span class="text-5xl block mb-4">{s.icon}</span>
+          <h3 class="text-xl font-bold text-primary mb-3">{s.name}</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">{s.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- About Me -->
+  <section class="bg-white py-20">
+    <div class="max-w-4xl mx-auto px-4 text-center fade-in">
+      <h2 class="text-3xl md:text-4xl font-bold text-primary mb-6">קצת עליי</h2>
+      <div class="w-32 h-32 mx-auto mb-6 bg-cream-dark rounded-full flex items-center justify-center text-5xl">🧘‍♀️</div>
+      <p class="text-lg leading-relaxed text-gray-700 max-w-2xl mx-auto">
+        שמי אסתר שירית, ואני מטפלת הוליסטית עם למעלה מ-10 שנות ניסיון.
+        הדרך שלי בעולם הטיפול התחילה מתוך חיפוש אישי אחרי ריפוי ושקט —
+        ומאז אני מלווה נשים רבות בתהליכים של שינוי, צמיחה והתחדשות.
+        אני מאמינה שהגוף והנפש מחוברים, ושכל אחת מחזיקה בתוכה את הכוח להירפא.
+      </p>
+      <a href="/about" class="inline-block mt-8 text-primary font-bold hover:underline">קראי עוד ←</a>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="max-w-5xl mx-auto px-4 py-20">
+    <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-12 fade-in">מה אומרות עליי</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      {[
+        { name: 'מיכל, 34', text: 'אחרי שנים שרצתי מטיפול לטיפול, אצל אסתר סוף סוף הרגשתי שמישהי באמת רואה אותי. הקואצ׳ינג שינה לי את הראש — ממש.' },
+        { name: 'שירן, 28', text: 'הגעתי עם כאבי גב כרוניים ומתח נפשי. אחרי סדרת עיסויים וארומתרפיה, הגוף שלי פשוט אמר תודה. ממליצה בחום!' },
+        { name: 'נועה, 41', text: 'פרחי הבאך עזרו לי בתקופה מאוד סוערת. אסתר ידעה בדיוק איך להרכיב את הנוסחה בשבילי. מרגישה כמו בן אדם חדש.' },
+      ].map(t => (
+        <div class="bg-white rounded-2xl p-8 shadow-md fade-in">
+          <p class="text-gray-600 leading-relaxed mb-4">"{t.text}"</p>
+          <p class="font-bold text-primary text-sm">— {t.name}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-primary text-white text-center py-16 px-4 fade-in">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">מוכנה להתחיל את השינוי?</h2>
+    <p class="text-lg text-white/80 mb-8">שיחת היכרות ראשונה — ללא עלות וללא התחייבות</p>
+    <a href="https://wa.me/972552400842?text=היי%20אסתר,%20אשמח%20לשיחת%20היכרות"
+       target="_blank" rel="noopener"
+       class="inline-block bg-secondary hover:bg-secondary-light text-white font-bold px-10 py-4 rounded-full text-lg transition-all hover:scale-105">
+      📞 דברי איתי
+    </a>
+  </section>
+
+</Layout>

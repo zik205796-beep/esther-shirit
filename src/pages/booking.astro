@@ -1,0 +1,310 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const services = [
+  { id: 'coaching', name: 'לייף קואצ׳ינג', emoji: '🧭', duration: 60 },
+  { id: 'massage', name: 'עיסוי', emoji: '💆', duration: 60 },
+  { id: 'aroma', name: 'ארומתרפיה', emoji: '🌸', duration: 45 },
+  { id: 'bach', name: 'פרחי באך', emoji: '🌺', duration: 45 },
+];
+
+const hours = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
+---
+
+<Layout title="הזמנת תור — אסתר שירית" description="הזמינו תור לטיפול הוליסטי אצל אסתר שירית בתל אביב">
+
+  <section class="max-w-2xl mx-auto px-4 py-16">
+    <h1 class="text-4xl font-bold text-primary text-center mb-3 fade-in">📅 הזמנת תור</h1>
+    <p class="text-center text-gray-500 mb-10 fade-in">בחרי שירות, תאריך ושעה — ואני כבר אאשר</p>
+
+    <!-- Booking Form -->
+    <form id="booking-form" class="space-y-6 fade-in">
+
+      <!-- Step 1: Service -->
+      <div>
+        <label class="block text-sm font-bold text-gray-700 mb-3">בחרי שירות</label>
+        <div class="grid grid-cols-2 gap-3">
+          {services.map(s => (
+            <label class="service-card cursor-pointer block border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary transition-all">
+              <input type="radio" name="service" value={s.id} data-name={s.name} data-duration={s.duration} class="hidden peer" required />
+              <span class="text-3xl block mb-2">{s.emoji}</span>
+              <span class="font-bold text-gray-700 block">{s.name}</span>
+              <span class="text-xs text-gray-400">{s.duration} דקות</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <!-- Step 2: Date -->
+      <div>
+        <label for="date" class="block text-sm font-bold text-gray-700 mb-2">בחרי תאריך</label>
+        <input type="date" id="date" name="date" required
+          class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-primary focus:outline-none transition" />
+      </div>
+
+      <!-- Step 3: Time -->
+      <div>
+        <label class="block text-sm font-bold text-gray-700 mb-3">בחרי שעה</label>
+        <div class="grid grid-cols-4 gap-2" id="time-slots">
+          {hours.map(h => (
+            <label class="time-slot cursor-pointer block border-2 border-gray-200 rounded-lg py-2 text-center hover:border-primary transition-all text-sm font-medium">
+              <input type="radio" name="time" value={h} class="hidden peer" required />
+              {h}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <!-- Step 4: Details -->
+      <div class="space-y-3">
+        <div>
+          <label for="name" class="block text-sm font-bold text-gray-700 mb-1">שם מלא</label>
+          <input type="text" id="name" name="name" required placeholder="השם שלך"
+            class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-primary focus:outline-none transition" />
+        </div>
+        <div>
+          <label for="phone" class="block text-sm font-bold text-gray-700 mb-1">טלפון</label>
+          <input type="tel" id="phone" name="phone" required placeholder="050-0000000" pattern="[0-9\-]{9,12}"
+            class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-primary focus:outline-none transition" />
+        </div>
+        <div>
+          <label for="notes" class="block text-sm font-bold text-gray-700 mb-1">הערות (אופציונלי)</label>
+          <textarea id="notes" name="notes" rows="2" placeholder="משהו שחשוב שאדע?"
+            class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-primary focus:outline-none transition resize-none"></textarea>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" id="submit-btn"
+        class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 rounded-full text-lg transition-all hover:scale-[1.02] shadow-lg">
+        ✨ אישור הזמנה
+      </button>
+    </form>
+
+    <!-- Success Message (hidden) -->
+    <div id="success-msg" class="hidden text-center py-16 space-y-4">
+      <div class="text-6xl">🎉</div>
+      <h2 class="text-2xl font-bold text-primary">התור נקבע בהצלחה!</h2>
+      <p class="text-gray-500" id="booking-summary"></p>
+      <p class="text-sm text-gray-400">מספר הזמנה: <span id="booking-id" class="font-mono"></span></p>
+      <p class="text-sm text-gray-400">נשלח לך אישור בוואטסאפ 💬</p>
+      <div class="flex gap-3 justify-center mt-6">
+        <a id="change-link" href="#"
+          class="inline-block bg-secondary hover:bg-secondary-light text-white font-bold px-6 py-3 rounded-full transition-all hover:scale-105">
+          ✏️ שינוי תור
+        </a>
+        <a id="cancel-link" href="#"
+          class="inline-block bg-red-500 hover:bg-red-600 text-white font-bold px-6 py-3 rounded-full transition-all hover:scale-105">
+          ❌ ביטול תור
+        </a>
+      </div>
+      <a href="/" class="inline-block text-primary hover:underline mt-4">← חזרה לדף הבית</a>
+    </div>
+  </section>
+
+  <!-- Manage Booking Section -->
+  <section id="manage-section" class="hidden max-w-2xl mx-auto px-4 pb-16">
+    <div class="bg-white rounded-2xl shadow-lg p-8 text-center space-y-4">
+      <h2 class="text-2xl font-bold text-primary" id="manage-title"></h2>
+      <p class="text-gray-500" id="manage-details"></p>
+      <div id="manage-actions" class="space-y-4"></div>
+    </div>
+  </section>
+
+  <style>
+    .service-card:has(input:checked) {
+      border-color: #812268;
+      background: #812268/5;
+      box-shadow: 0 0 0 3px rgba(129,34,104,0.15);
+    }
+    .time-slot:has(input:checked) {
+      border-color: #812268;
+      background: #812268;
+      color: white;
+    }
+  </style>
+
+  <script>
+    // Simple booking system using localStorage
+    const STORAGE_KEY = 'esther_bookings';
+
+    function generateId() {
+      return 'ES' + Date.now().toString(36).toUpperCase();
+    }
+
+    function getBookings() {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    }
+
+    function saveBookings(bookings) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+    }
+
+    // Set min date to today
+    const dateInput = document.getElementById('date');
+    if (dateInput) {
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.setAttribute('min', today);
+      
+      // Disable Saturdays (Shabbat) and Fridays
+      dateInput.addEventListener('input', function() {
+        const d = new Date(this.value);
+        const day = d.getDay();
+        if (day === 5 || day === 6) {
+          alert('לא זמין בימי שישי-שבת');
+          this.value = '';
+        }
+      });
+    }
+
+    // Form submission
+    document.getElementById('booking-form')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const serviceRadio = document.querySelector('input[name="service"]:checked');
+      
+      const booking = {
+        id: generateId(),
+        service: formData.get('service'),
+        serviceName: serviceRadio?.dataset.name || '',
+        duration: serviceRadio?.dataset.duration || '',
+        date: formData.get('date'),
+        time: formData.get('time'),
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        notes: formData.get('notes') || '',
+        status: 'confirmed',
+        createdAt: new Date().toISOString()
+      };
+
+      // Save
+      const bookings = getBookings();
+      bookings.push(booking);
+      saveBookings(bookings);
+
+      // Format date for display
+      const dateObj = new Date(booking.date);
+      const dateStr = dateObj.toLocaleDateString('he-IL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+      // Show success
+      document.getElementById('booking-form').classList.add('hidden');
+      document.getElementById('success-msg').classList.remove('hidden');
+      document.getElementById('booking-summary').textContent = 
+        `${booking.serviceName} · ${dateStr} · ${booking.time}`;
+      document.getElementById('booking-id').textContent = booking.id;
+      
+      document.getElementById('change-link').href = `/booking?manage=${booking.id}&action=change`;
+      document.getElementById('cancel-link').href = `/booking?manage=${booking.id}&action=cancel`;
+
+      // Send WhatsApp notification to Esther
+      const waMsg = encodeURIComponent(
+        `🔔 תור חדש!\n👤 ${booking.name}\n📞 ${booking.phone}\n💆 ${booking.serviceName}\n📅 ${dateStr}\n⏰ ${booking.time}\n${booking.notes ? '📝 ' + booking.notes : ''}`
+      );
+      // Silent notification - opens in background
+      const waLink = `https://wa.me/972552400842?text=${waMsg}`;
+      
+      // Also offer to send WhatsApp
+      setTimeout(() => {
+        if (confirm('לשלוח אישור לאסתר בוואטסאפ?')) {
+          window.open(waLink, '_blank');
+        }
+      }, 500);
+    });
+
+    // Handle manage links (change/cancel)
+    const params = new URLSearchParams(window.location.search);
+    const manageId = params.get('manage');
+    const action = params.get('action');
+
+    if (manageId) {
+      const bookings = getBookings();
+      const booking = bookings.find(b => b.id === manageId);
+      
+      document.getElementById('booking-form')?.classList.add('hidden');
+      const manageSection = document.getElementById('manage-section');
+      manageSection?.classList.remove('hidden');
+
+      if (!booking) {
+        document.getElementById('manage-title').textContent = '❌ הזמנה לא נמצאה';
+        document.getElementById('manage-details').textContent = 'ייתכן שההזמנה כבר בוטלה.';
+      } else if (action === 'cancel') {
+        document.getElementById('manage-title').textContent = '❌ ביטול תור';
+        const dateObj = new Date(booking.date);
+        const dateStr = dateObj.toLocaleDateString('he-IL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('manage-details').textContent = 
+          `${booking.serviceName} · ${dateStr} · ${booking.time}`;
+        
+        document.getElementById('manage-actions').innerHTML = `
+          <p class="text-gray-600">בטוחה שאת רוצה לבטל את התור?</p>
+          <div class="flex gap-3 justify-center">
+            <button id="confirm-cancel" class="bg-red-500 hover:bg-red-600 text-white font-bold px-8 py-3 rounded-full transition">כן, בטלי</button>
+            <a href="/booking" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold px-8 py-3 rounded-full transition inline-block">חזרה</a>
+          </div>
+        `;
+
+        document.getElementById('confirm-cancel')?.addEventListener('click', () => {
+          const updated = getBookings().filter(b => b.id !== manageId);
+          saveBookings(updated);
+          document.getElementById('manage-title').textContent = '✅ התור בוטל';
+          document.getElementById('manage-details').textContent = 'ההזמנה בוטלה בהצלחה.';
+          document.getElementById('manage-actions').innerHTML = `
+            <a href="/booking" class="inline-block bg-primary hover:bg-primary-dark text-white font-bold px-8 py-3 rounded-full transition">הזמנת תור חדש</a>
+          `;
+        });
+
+      } else if (action === 'change') {
+        document.getElementById('manage-title').textContent = '✏️ שינוי תור';
+        const dateObj = new Date(booking.date);
+        const dateStr = dateObj.toLocaleDateString('he-IL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('manage-details').textContent = 
+          `תור נוכחי: ${booking.serviceName} · ${dateStr} · ${booking.time}`;
+
+        const hours = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
+        
+        document.getElementById('manage-actions').innerHTML = `
+          <div class="space-y-4 text-right">
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-1">תאריך חדש</label>
+              <input type="date" id="new-date" value="${booking.date}" min="${new Date().toISOString().split('T')[0]}"
+                class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-primary focus:outline-none transition" />
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-1">שעה חדשה</label>
+              <select id="new-time" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-primary focus:outline-none transition">
+                ${hours.map(h => `<option value="${h}" ${h === booking.time ? 'selected' : ''}>${h}</option>`).join('')}
+              </select>
+            </div>
+            <div class="flex gap-3 justify-center">
+              <button id="confirm-change" class="bg-primary hover:bg-primary-dark text-white font-bold px-8 py-3 rounded-full transition">אישור שינוי</button>
+              <a href="/booking" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold px-8 py-3 rounded-full transition inline-block">חזרה</a>
+            </div>
+          </div>
+        `;
+
+        document.getElementById('confirm-change')?.addEventListener('click', () => {
+          const newDate = document.getElementById('new-date').value;
+          const newTime = document.getElementById('new-time').value;
+          
+          const bookings = getBookings();
+          const idx = bookings.findIndex(b => b.id === manageId);
+          if (idx !== -1) {
+            bookings[idx].date = newDate;
+            bookings[idx].time = newTime;
+            saveBookings(bookings);
+          }
+
+          const newDateObj = new Date(newDate);
+          const newDateStr = newDateObj.toLocaleDateString('he-IL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+          document.getElementById('manage-title').textContent = '✅ התור עודכן!';
+          document.getElementById('manage-details').textContent = 
+            `${booking.serviceName} · ${newDateStr} · ${newTime}`;
+          document.getElementById('manage-actions').innerHTML = `
+            <a href="/" class="inline-block bg-primary hover:bg-primary-dark text-white font-bold px-8 py-3 rounded-full transition">חזרה לדף הבית</a>
+          `;
+        });
+      }
+    }
+  </script>
+</Layout>
